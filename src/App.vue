@@ -45,7 +45,7 @@ onUnmounted(() => {
               <a href="" class="logo-link">
                 <img class="logo-img" src="./components/images/logo.png" alt="Logo" />
               </a>
-              <h1 class="logo-text">Patient Management</h1>
+              <h1 class="logo-text">Patient <span class="title">Management</span></h1>
             </div>
           </div>
           <div class="nav-buttons">
@@ -105,7 +105,15 @@ onUnmounted(() => {
   transition: background-color 200ms;
 }
 /* Header styles */
+.title{
+  color: #32e09b;
+  font-weight: 700;
+  text-decoration-color: #6afbc2;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.2rem;
+  text-shadow: 0 0 5px rgba(106, 251, 194, 0.5);
 
+}
 .main-header {
   position: fixed;
   top: 0;
