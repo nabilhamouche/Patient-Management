@@ -35,7 +35,7 @@ onMounted(() => {
         <div class="hero-content">
           <h1>Powering Healthcare.</h1>
           <p class="scroll-item" style="font-size: 20px;">Effortlessly manage patient records with our easy-to-use system.</p>
-          <button @click="$emit('navigate', 'form')">Get Started</button>
+          <button  class="scroll-item" @click="$emit('navigate', 'form')">Get Started</button>
         </div>
         <div class="health-image">
           <img style="height: 100%; width: 100%;" src="./images/hero_health.png" alt="health image">
@@ -76,7 +76,7 @@ onMounted(() => {
     </div>
 
     <!-- How It Works Section -->
-    <section class="how-it-works " id="how-it-works">
+    <section class="how-it-works " id="howit-works">
       <h1 class="scroll-item">How It Works</h1>
       <p class="scroll-item">Simple steps to manage your patient</p>
       <div class="steps">
@@ -85,14 +85,14 @@ onMounted(() => {
             <h3>1. Register Patients</h3>
             <p>Fill in patient details and submit.</p>
           </div>
-          <button @click="$emit('navigate', 'form')">Register Patients</button>
+          <button class="scroll-item" @click="$emit('navigate', 'form')">Register Patients</button>
         </div>
         <div class="step ">
           <div class="scroll-item">
             <h3>2. View Records</h3>
             <p>Access patient history anytime.</p>
           </div>
-          <button @click="$emit('navigate', 'list')">Check Records</button>
+          <button class="scroll-item"  @click="$emit('navigate', 'list')">Check Records</button>
         </div>
       </div>
     </section>
@@ -121,7 +121,7 @@ onMounted(() => {
             <ul class="text-sm space-y-2">
               <li><a href="#home" class="hover:text-white transition">Home</a></li>
               <li><a href="#features" class="hover:text-white transition">Features</a></li>
-              <li><a href="#how-it-works" class="hover:text-white transition">How It Works</a></li>
+              <li><a href="#howit-works" class="hover:text-white transition">How It Works</a></li>
               <li><a href="#contact" class="hover:text-white transition">Contact</a></li>
             </ul>
           </div>
