@@ -152,7 +152,7 @@ onMounted(async () => {
             <td>{{ formatDate(patient.dateOfBirth) }}</td>
             <td>{{ patient.email }}</td>
             <td>{{ patient.phone }}</td>
-            <td><span class="gender-badge">{{ patient.gender }}</span></td>
+            <td><span :class="[patient.gender==='Male'? 'gender-badge': 'gender-badge-Female']">{{ patient.gender }}</span></td>
             <td><span class="diagnosis-badge">{{ patient.diagnosis }}</span></td>
           </tr>
           <tr v-else>
@@ -325,7 +325,14 @@ td {
   background-color: #e0f2fe;
   color: #0369a1;
 }
-
+.gender-badge-Female{
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background-color: #fdcaf2;
+  color: #f35da8;
+}
 .diagnosis-badge {
   padding: 0.25rem 0.5rem;
   border-radius: 9999px;
