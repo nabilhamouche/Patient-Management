@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref,watch  } from 'vue';
 import { format } from 'date-fns';
 
 const patients = ref([]);
@@ -7,7 +7,7 @@ const sortField = ref('lastName');
 const sortDirection = ref('asc');
 const searchQuery = ref('');
 const searchField = ref('lastName');
-
+let debounceTimeout;
 const sortKeyMap = {
   'First Name': 'firstName',
   'Last Name': 'lastName',
@@ -15,23 +15,43 @@ const sortKeyMap = {
   'Email': 'email',
 };
 
-const filteredPatients = computed(() => {
-  return patients.value.filter(patient => {
+watch([searchQuery, searchField],  () => {
+  clearTimeout(debounceTimeout);
+  debounceTimeout = setTimeout(async () => {
     const field = searchField.value;
-    const query = searchQuery.value.trim(); 
+  const query = searchQuery.value.trim();
 
-    if (!query) return true;
+  if (!query) {
 
+    const res = await fetch('http://localhost:3000/api/get-patients');
+    patients.value = await res.json();
+    return;
+  }
+
+  try {
     if (field === 'id') {
-      return patient.id?.toString() === query;
+      const res = await fetch(`http://localhost:3000/api/get-patients/${query}`);
+      if (res.ok) {
+        patients.value = [await res.json()];
+      } else {
+        patients.value = [];
+      }
+    } else {
+      const res = await fetch(`http://localhost:3000/api/get-patients?${field}=${encodeURIComponent(query)}`);
+      patients.value = res.ok ? await res.json() : [];
     }
-
-    const searchValue = patient[field]?.toString().toLowerCase() ?? '';
-    return searchValue.includes(query.toLowerCase());
-  });
+  } catch (error) {
+    console.error('Error while filtering patients:', error);
+    patients.value = [];
+  }
+  }, 300);
+ 
+});
+const filteredPatients = computed(() => {
+  return patients.value; 
 });
 
-const sortedPatients = computed(() => {
+const sortedPatients =  computed(() => {
   return [...filteredPatients.value].sort((a, b) => {
     const field = sortField.value;
     const direction = sortDirection.value === 'asc' ? 1 : -1;
@@ -101,7 +121,7 @@ onMounted(async () => {
         <option value="id">ID</option>
       </select>
     </div>
-    <div class="note">click on any  table head in order to sort it asc <span class="sort-indicator">↑</span> or desc <span class="sort-indicator">↓</span></div>
+    <div class="note">click on the four first table head in order to sort it asc <span class="sort-indicator">↑</span> or desc <span class="sort-indicator">↓</span></div>
     </div>
     
    
@@ -126,7 +146,7 @@ onMounted(async () => {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="patient in sortedPatients" :key="patient.id">
+          <tr v-if="sortedPatients.length" v-for="patient in sortedPatients" :key="patient.id">
             <td>{{ patient.firstName }}</td>
             <td>{{ patient.lastName }}</td>
             <td>{{ formatDate(patient.dateOfBirth) }}</td>
@@ -134,6 +154,9 @@ onMounted(async () => {
             <td>{{ patient.phone }}</td>
             <td><span class="gender-badge">{{ patient.gender }}</span></td>
             <td><span class="diagnosis-badge">{{ patient.diagnosis }}</span></td>
+          </tr>
+          <tr v-else>
+            <td colspan="7" class="text-center">No patients found</td>
           </tr>
         </tbody>
       </table>
@@ -146,8 +169,8 @@ onMounted(async () => {
   padding: 1.5rem;
   max-width: 1400px;
   margin: 0 auto;
-  /* background-color: ##e5e7eb; */
-  /* border-radius: 20%; */
+  border-radius: 5px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
   min-height: 100vh;
 }
 
@@ -187,8 +210,8 @@ onMounted(async () => {
 }
 
 .search-input:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+  border-color: #007d7d;
+  box-shadow: 0 0 0 2px rgba(0, 125, 125, 0.3);
   outline: none;
 }
 .search{
@@ -223,8 +246,8 @@ onMounted(async () => {
 
 
 .search-select:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+  border-color: #007d7d;
+  box-shadow: 0 0 0 2px rgba(0, 125, 125, 0.3);
   outline: none;
 }
 
@@ -241,7 +264,12 @@ table {
   border-spacing: 0;
   background-color: white;
 }
-
+.text-center{
+  text-align: center;
+  font-size: 1rem;
+  color: #6b7280;
+  padding: 1rem;
+}
 th, td {
   padding: 0.75rem 1rem;
   text-align: left;

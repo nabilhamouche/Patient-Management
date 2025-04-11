@@ -15,7 +15,7 @@ const handleAddPatient = (patient) => {
 };
 
 const handleScroll = () => {
-  if (window.scrollY > 70) {
+  if (window.scrollY > 100) {
     isScrolled.value = true;
   } else {
     isScrolled.value = false;
