@@ -229,6 +229,7 @@ onUnmounted(() => {
 
 .scrolled-button {
   color: black;
+  transition: color 300ms, background-color 300ms;
 }
 
 .scrolled-button:hover {
@@ -238,6 +239,7 @@ onUnmounted(() => {
 
 .normal-button {
   color: #374151;
+  transition: color 300ms, font-weight 300ms;
 }
 
 .normal-button:hover {

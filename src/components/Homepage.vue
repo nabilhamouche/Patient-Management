@@ -1,19 +1,19 @@
-<script setup lang="ts">
+<script setup>
 import { onMounted } from 'vue';
 
 onMounted(() => {
   const scrollItems = document.querySelectorAll('.scroll-item');
 
   const observerOptions = {
-    root: null, 
-    threshold: 0.5, 
+    root: null,
+    threshold: 0.5,
   };
 
-  const observerCallback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
+  const observerCallback = (entries, observer) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('show');
-        observer.unobserve(entry.target); 
+        observer.unobserve(entry.target);
       }
     });
   };
@@ -34,8 +34,8 @@ onMounted(() => {
       <div class="hero__container nav-container">
         <div class="hero-content">
           <h1>Powering Healthcare.</h1>
-          <p class="scroll-item" style="font-size: 20px;">Effortlessly manage patient records with our easy-to-use system.</p>
-          <button  class="scroll-item" @click="$emit('navigate', 'form')">Get Started</button>
+          <p class="scroll-item hero-desc">Effortlessly manage patient records with our easy-to-use system.</p>
+          <button class="scroll-item" @click="$emit('navigate', 'form')">Get Started</button>
         </div>
         <div class="health-image">
           <img style="height: 100%; width: 100%;" src="./images/hero_health.png" alt="health image">
@@ -46,7 +46,7 @@ onMounted(() => {
     <!-- Features Section -->
     <section class="features scroll-item max-wnav-container" id="features">
       <h1>Features</h1>
-      <p>Designed for Impact, Built for Perfection</p>
+      <p class="features-subtitle">Designed for Impact, Built for Perfection</p>
       <div class="feature_content">
         <div class="feature_items">
           <h2>📋 Easy Patient Management</h2>
@@ -64,21 +64,21 @@ onMounted(() => {
     </section>
 
     <!-- Wrapper Section -->
-    <div class="wrapper_section ">
+    <div class="wrapper_section">
       <div class="bg-image__wrapper">
         <img class="bg-image" src="./images/blue_bg.webp" alt="bg blue img">
       </div>
       <div class="wrapper_content nav-container">
         <h1 class="scroll-item">Effortless Patient Management for Healthcare Professionals</h1>
-        <p class="scroll-item" style="font-size: 20px;">Streamline patient records, appointments, and medical history with our simple and efficient system. Keep all your patient data organized in one place.</p>
+        <p class="scroll-item hero-desc">Streamline patient records, appointments, and medical history with our simple and efficient system. Keep all your patient data organized in one place.</p>
         <button class="scroll-item" @click="$emit('navigate', 'form')">Get Started Today</button>
       </div>
     </div>
 
     <!-- How It Works Section -->
-    <section class="how-it-works " id="howit-works">
+    <section class="how-it-works" id="howit-works">
       <h1 class="scroll-item">How It Works</h1>
-      <p class="scroll-item">Simple steps to manage your patient</p>
+      <p class="scroll-item features-subtitle">Simple steps to manage your patient</p>
       <div class="steps">
         <div class="step">
           <div class="scroll-item">
@@ -87,12 +87,12 @@ onMounted(() => {
           </div>
           <button class="scroll-item" @click="$emit('navigate', 'form')">Register Patients</button>
         </div>
-        <div class="step ">
+        <div class="step">
           <div class="scroll-item">
             <h3>2. View Records</h3>
             <p>Access patient history anytime.</p>
           </div>
-          <button class="scroll-item"  @click="$emit('navigate', 'list')">Check Records</button>
+          <button class="scroll-item" @click="$emit('navigate', 'list')">Check Records</button>
         </div>
       </div>
     </section>
@@ -111,24 +111,24 @@ onMounted(() => {
         </div>
         <div class="container">
           <div class="box">
-            <h3 class="text-lg font-semibold mb-3">About Us</h3>
-            <p class="text-sm">
+            <h3 class="heading">About Us</h3>
+            <p class="text">
               Our Patient Management System ensures efficient medical record management, appointment scheduling, and secure patient data storage.
             </p>
           </div>
           <div class="box">
-            <h3 class="text-lg font-semibold mb-3">Quick Links</h3>
-            <ul class="text-sm space-y-2">
-              <li><a href="#home" class="hover:text-white transition">Home</a></li>
-              <li><a href="#features" class="hover:text-white transition">Features</a></li>
-              <li><a href="#howit-works" class="hover:text-white transition">How It Works</a></li>
-              <li><a href="#contact" class="hover:text-white transition">Contact</a></li>
+            <h3 class="heading">Quick Links</h3>
+            <ul>
+              <li><a href="#home" class="link">Home</a></li>
+              <li><a href="#features" class="link">Features</a></li>
+              <li><a href="#howit-works" class="link">How It Works</a></li>
+              <li><a href="#contact" class="link">Contact</a></li>
             </ul>
           </div>
           <div class="box" id="contact">
-            <h3 class="text-lg font-semibold mb-3">Contact Us</h3>
-            <p class="text-sm">📞 +1 (555) 123-4567</p>
-            <p class="text-sm">✉️ contact@patientms.com</p>
+            <h3 class="heading">Contact Us</h3>
+            <p class="text">📞 +1 (555) 123-4567</p>
+            <p class="text">✉️ contact@patientms.com</p>
           </div>
         </div>
       </div>
@@ -136,7 +136,6 @@ onMounted(() => {
     </footer>
   </div>
 </template>
-
   
   <style>
    /* some additional style */
@@ -156,7 +155,38 @@ onMounted(() => {
     transform: translateY(30px);
     transition: opacity 0.6s ease-out, transform 0.6s ease-out;
   }
+  .hero-desc {
+  font-size: 20px;
+}
 
+.heading {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.text {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.3s ease-in-out;
+}
+
+.link:hover {
+  color: #fff;
+}
+
+.features-subtitle {
+  margin: -50px 0 0;
+  font-size: 1rem;
+  text-align: center;
+  color: #797979;
+  animation: fadeInUp 1.2s ease;
+}
   .scroll-item.show {
     opacity: 1;
     transform: translateY(0);
