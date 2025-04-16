@@ -142,6 +142,8 @@ onMounted(async () => {
             </th>
             <th>Phone</th>
             <th>Gender</th>
+            <th>BloodType</th>
+            <th>Allergies</th>
             <th>Diagnosis</th>
           </tr>
         </thead>
@@ -153,10 +155,12 @@ onMounted(async () => {
             <td>{{ patient.email }}</td>
             <td>{{ patient.phone }}</td>
             <td><span :class="[patient.gender==='Male'? 'gender-badge': 'gender-badge-Female']">{{ patient.gender }}</span></td>
+            <td>{{ patient.bloodType }}</td>
+            <td>{{ patient.allergies }}</td>
             <td><span class="diagnosis-badge">{{ patient.diagnosis }}</span></td>
           </tr>
           <tr v-else>
-            <td colspan="7" class="text-center">No patients found</td>
+            <td colspan="9" class="text-center">No patients found</td>
           </tr>
         </tbody>
       </table>

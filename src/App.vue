@@ -11,7 +11,6 @@ const atTop = ref(true);
 
 const handleAddPatient = (patient) => {
   patients.value.push(patient);
-  activeView.value = 'list';
 };
 
 const handleScroll = () => {
@@ -239,7 +238,7 @@ onUnmounted(() => {
 
 .normal-button {
   color: #374151;
-  transition: color 300ms, font-weight 300ms;
+  transition: color 10s ease-in-out, font-weight 10s ease-in-out;
 }
 
 .normal-button:hover {
